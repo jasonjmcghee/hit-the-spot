@@ -100,6 +100,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Resume"
 
+[node name="MainMenu" type="Button" parent="Menu/ColorRect/MenuOptions"]
+visible = false
+margin_left = 51.0
+margin_top = 93.0
+margin_right = 105.0
+margin_bottom = 107.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Main Menu"
+
 [node name="Quit" type="Button" parent="Menu/ColorRect/MenuOptions"]
 margin_left = 66.0
 margin_top = 104.0

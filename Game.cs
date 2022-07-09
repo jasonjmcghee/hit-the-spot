@@ -8,7 +8,7 @@ public enum GameState {
 }
 
 public class Game : Node2D {
-    [Export] public GameState StartState = GameState.Playing;
+    [Export] public GameState StartState = GameState.MainMenu;
     private GameState _gameState = GameState.MainMenu;
 
     private string _highscorePath = "user://best.score";
@@ -47,6 +47,7 @@ public class Game : Node2D {
             _menuOverlay.Visible = true;
             _playButton.Visible = true;
             _resumeButton.Visible = false;
+            _mainMenuButton.Visible = false;
         } else if (GameState == GameState.Playing) {
             GetTree().Paused = false;
             _menuOverlay.Visible = false;
@@ -55,6 +56,7 @@ public class Game : Node2D {
             _menuOverlay.Visible = true;
             _playButton.Visible = false;
             _resumeButton.Visible = true;
+            _mainMenuButton.Visible = true;
         }
     }
 
@@ -62,6 +64,7 @@ public class Game : Node2D {
     private VBoxContainer _menuOptions;
     private Button _playButton;
     private Button _resumeButton;
+    private Button _mainMenuButton;
     private Button _quitButton;
     private VBoxContainer _scores;
     private Label _currentScoreNode;
@@ -72,25 +75,32 @@ public class Game : Node2D {
     private Sprite _spot;
     private Vector2 _dotDirection = Vector2.Right;
 
+    private bool _alreadyPressed;
+    private bool _fire;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
         _menuOverlay = GetNode<ColorRect>("Menu/ColorRect");
         _menuOptions = _menuOverlay.GetNode<VBoxContainer>("MenuOptions");
         _playButton = _menuOptions.GetNode<Button>("Play");
         _resumeButton = _menuOptions.GetNode<Button>("Resume");
+        _mainMenuButton = _menuOptions.GetNode<Button>("MainMenu");
         _quitButton = _menuOptions.GetNode<Button>("Quit");
         _playButton.Connect("pressed", this, nameof(StartGame));
         _resumeButton.Connect("pressed", this, nameof(StartGame));
+        _mainMenuButton.Connect("pressed", this, nameof(MainMenu));
         _quitButton.Connect("pressed", this, nameof(QuitGame));
+        // Only show quit if this isn't a browser window
+        _quitButton.Visible = !OS.HasFeature("JavaScript");
         
         _scores = GetNode<VBoxContainer>("Hud/Scores");
         _currentScoreNode = _scores.GetNode<Label>("Score");
         _bestScoreNode = _scores.GetNode<Label>("Best");
         
         CustomInput.EnsureActionKey("pause", KeyList.Escape);
-        CustomInput.EnsureActionKey("hit", KeyList.Space);
-        CustomInput.EnsureActionEvent("hit", new InputEventMouseButton { ButtonIndex = 1 });
-        CustomInput.EnsureActionEvent("hit", new InputEventScreenTouch { Index = 0 });
+        CustomInput.EnsureActionKey("fire", KeyList.Space);
+        CustomInput.EnsureActionEvent("fire", new InputEventMouseButton { ButtonIndex = 1, Pressed = true });
+        CustomInput.EnsureActionEvent("fire", new InputEventScreenTouch { Pressed = true });
 
         _bar = GetNode<Sprite>("Bar");
         _dot = _bar.GetNode<Sprite>("Dot");
@@ -105,6 +115,13 @@ public class Game : Node2D {
     public void StartGame() {
         GetTree().Paused = false;
         GameState = GameState.Playing;
+    }
+    
+    public void MainMenu() {
+        GetTree().Paused = true;
+        ResetLevel();
+        GetTree().Paused = false;
+        GameState = GameState.MainMenu;
     }
 
     public void PauseGame() {
@@ -128,7 +145,8 @@ public class Game : Node2D {
         }
 
         if (GameState == GameState.Playing) {
-            if (Input.IsActionJustPressed("hit")) {
+            if (Input.IsActionJustPressed("fire") || _fire) {
+                _fire = false;
                 if (DidHit()) {
                     AdvanceLevel();
                 } else {
@@ -190,5 +208,20 @@ public class Game : Node2D {
         file.Open(_highscorePath, File.ModeFlags.Read);
         BestSpotsHit = file.Get64();
         file.Close();
+    }
+    
+    // Workaround for Touch + HTML5
+    public override void _UnhandledInput(InputEvent @event) {
+        if (@event is InputEventMouseButton mouse) {
+            if (mouse.Pressed && !_alreadyPressed) {
+                _fire = true;
+                _alreadyPressed = true;
+            }
+
+            if (!mouse.Pressed) {
+                _fire = false;
+                _alreadyPressed = false;
+            }
+        }
     }
 }
