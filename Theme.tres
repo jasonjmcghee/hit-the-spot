@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=7 format=2]
+
+[ext_resource path="res://monogram.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_detail = 1
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 1, 1, 0 )
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 0 )
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0.392157 )
+corner_detail = 1
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0.705882 )
+expand_margin_bottom = 2.0
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 1 )
+
+[resource]
+default_font = SubResource( 5 )
+Button/styles/focus = SubResource( 3 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 4 )

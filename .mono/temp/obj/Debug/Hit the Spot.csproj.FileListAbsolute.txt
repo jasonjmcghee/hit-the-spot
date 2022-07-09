@@ -1,0 +1,8 @@
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/bin/Debug/Hit the Spot.dll
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/bin/Debug/Hit the Spot.pdb
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.csprojAssemblyReference.cache
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.AssemblyInfoInputs.cache
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.AssemblyInfo.cs
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.csproj.CoreCompileInputs.cache
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.dll
+/Users/jason/GodotProjects/Hit the Spot/.mono/temp/obj/Debug/Hit the Spot.pdb

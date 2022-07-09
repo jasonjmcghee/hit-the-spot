@@ -1,0 +1,110 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Theme.tres" type="Theme" id=1]
+[ext_resource path="res://Game.cs" type="Script" id=2]
+[ext_resource path="res://Monogram.tres" type="DynamicFont" id=3]
+[ext_resource path="res://pixel.png" type="Texture" id=4]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Bar" type="Sprite" parent="."]
+position = Vector2( 60, 115 )
+scale = Vector2( 200, 10 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Spot" type="Sprite" parent="Bar"]
+modulate = Color( 0.811765, 0.247059, 0.247059, 1 )
+scale = Vector2( 0.2, 1 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Dot" type="Sprite" parent="Bar"]
+modulate = Color( 0.223529, 0.407843, 0.898039, 1 )
+scale = Vector2( 0.025, 1 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Scores" type="VBoxContainer" parent="Hud"]
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.025
+anchor_bottom = 0.025
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Score" type="Label" parent="Hud/Scores"]
+margin_right = 60.0
+margin_bottom = 13.0
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+text = "Spots Hit:"
+
+[node name="Best" type="Label" parent="Hud/Scores"]
+margin_top = 21.0
+margin_right = 60.0
+margin_bottom = 34.0
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+text = "Best:"
+
+[node name="Menu" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+color = Color( 0.0745098, 0.0705882, 0.0705882, 1 )
+
+[node name="Title" type="Label" parent="Menu/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.25
+margin_left = -78.0
+margin_right = 78.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 3 )
+text = "Hit the spot!"
+align = 1
+
+[node name="MenuOptions" type="VBoxContainer" parent="Menu/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -78.0
+margin_right = 78.0
+alignment = 1
+
+[node name="Play" type="Button" parent="Menu/ColorRect/MenuOptions"]
+margin_left = 66.0
+margin_top = 82.0
+margin_right = 90.0
+margin_bottom = 96.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"
+
+[node name="Resume" type="Button" parent="Menu/ColorRect/MenuOptions"]
+visible = false
+margin_left = 60.0
+margin_top = 102.0
+margin_right = 96.0
+margin_bottom = 116.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Resume"
+
+[node name="Quit" type="Button" parent="Menu/ColorRect/MenuOptions"]
+margin_left = 66.0
+margin_top = 104.0
+margin_right = 90.0
+margin_bottom = 118.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
