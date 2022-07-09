@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Theme.tres" type="Theme" id=1]
 [ext_resource path="res://Game.cs" type="Script" id=2]
 [ext_resource path="res://Monogram.tres" type="DynamicFont" id=3]
 [ext_resource path="res://pixel.png" type="Texture" id=4]
+
+[sub_resource type="InputEventKey" id=1]
+pressed = true
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -88,6 +94,7 @@ margin_right = 90.0
 margin_bottom = 96.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+shortcut = SubResource( 2 )
 text = "Play"
 
 [node name="Resume" type="Button" parent="Menu/ColorRect/MenuOptions"]

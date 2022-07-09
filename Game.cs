@@ -87,6 +87,7 @@ public class Game : Node2D {
         _mainMenuButton = _menuOptions.GetNode<Button>("MainMenu");
         _quitButton = _menuOptions.GetNode<Button>("Quit");
         _playButton.Connect("pressed", this, nameof(StartGame));
+        _playButton.Shortcut = new ShortCut {Shortcut = new InputEventKey { Scancode = (int) KeyList.Space } };
         _resumeButton.Connect("pressed", this, nameof(StartGame));
         _mainMenuButton.Connect("pressed", this, nameof(MainMenu));
         _quitButton.Connect("pressed", this, nameof(QuitGame));
@@ -98,6 +99,7 @@ public class Game : Node2D {
         _bestScoreNode = _scores.GetNode<Label>("Best");
         
         CustomInput.EnsureActionKey("pause", KeyList.Escape);
+        CustomInput.EnsureActionKey("startGame", KeyList.Space);
         CustomInput.EnsureActionKey("fire", KeyList.Space);
         CustomInput.EnsureActionEvent("fire", new InputEventMouseButton { ButtonIndex = 1, Pressed = true });
         CustomInput.EnsureActionEvent("fire", new InputEventScreenTouch { Pressed = true });
@@ -145,6 +147,13 @@ public class Game : Node2D {
         }
 
         if (GameState == GameState.Playing) {
+            if (_dotDirection == Vector2.Right && _dot.Position.x >= 1 - _dot.Scale.x) {
+                _dotDirection = Vector2.Left;
+            } else if (_dotDirection == Vector2.Left && _dot.Position.x <= 0) {
+                _dotDirection = Vector2.Right;
+            }
+            _dot.Position += _dotDirection * DotSpeed * delta;
+            
             if (Input.IsActionJustPressed("fire") || _fire) {
                 _fire = false;
                 if (DidHit()) {
@@ -153,13 +162,6 @@ public class Game : Node2D {
                     GameOver();
                 }
             }
-            
-            if (_dotDirection == Vector2.Right && _dot.Position.x >= 1 - _dot.Scale.x) {
-                _dotDirection = Vector2.Left;
-            } else if (_dotDirection == Vector2.Left && _dot.Position.x <= 0) {
-                _dotDirection = Vector2.Right;
-            }
-            _dot.Position += _dotDirection * DotSpeed * delta;
         }
     }
 
